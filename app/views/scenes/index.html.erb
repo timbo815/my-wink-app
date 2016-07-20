@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>My Scenes</h1>
+    <% @scenes.each do |scene| %>
+    <%= link_to scene["name"], scene_url(scene["scene_id"]) %>
+    <% end %>
+  </body>
+</html>

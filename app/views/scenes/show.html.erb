@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1><%=@scene["name"]%></h1>
+    <p>
+      <%= @scene %>
+    </p>
+    <%= button_to "Activate", scene_url(@scene["scene_id"]), method: "patch"%>
+  </body>
+</html>

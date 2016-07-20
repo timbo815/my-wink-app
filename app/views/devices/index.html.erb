@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>My Devices</h1>
+    <% @devices.each do |device| %>
+    <% id_string = device["name"].downcase.split(" ").push("id").join("_") %>
+    <% id = device[id_string] %>
+      <p>device: <%= device["name"] %></p>
+      <p>device id: <%= device[id_string]%></p>
+      <% end %>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+class UsersController < ApplicationController
+
+  def create
+    email = params[:user][:email]
+    password = params[:user][:password]
+
+    values = <<-VALUES
+    {
+      "client_id": "basic_wink_client",
+      "client_secret": "d9b18dd3d4aec9c53b4ac8ddc7ddad49",
+      "username": "#{email}",
+      "password": "#{password}",
+      "grant_type": "password"
+    }
+   VALUES
+
+    headers = {
+      :content_type => 'application/json'
+    }
+
+    response = RestClient.post 'https://api.wink.com/oauth2/token', values, headers
+    j_response = JSON.parse(response)
+
+    @user = User.new(user_params)
+    @user.auth_token = j_response["data"]["access_token"]
+    @user.refresh_token = j_response["data"]["refresh_token"]
+
+    if @user.save
+      login_user!(@user)
+      redirect_to user_url
+    else
+      flash.now[:errors] = @user.errors.full_messages
+      render :new
+    end
+  end
+
+  def new
+    @user = User.new
+    render :new
+  end
+
+  private
+  def user_params
+    params.require(:user).permit(:password, :email)
+  end
+
+end

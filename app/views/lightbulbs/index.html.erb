@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>My Lightbulbs</h1>
+    <% @lightbulbs.each do |lightbulb| %>
+    <%= link_to lightbulb["name"], lightbulb_url(lightbulb["light_bulb_id"]) %>
+    <% end %>
+  </body>
+</html>
