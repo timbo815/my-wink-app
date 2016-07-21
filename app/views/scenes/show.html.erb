@@ -9,6 +9,6 @@
     <p>
       <%= @scene %>
     </p>
-    <%= button_to "Activate", scene_url(@scene["scene_id"]), method: "patch"%>
+    <%= link_to "Activate", {:controller => "scenes", :action => "update", :id => @scene["scene_id"]} %>
   </body>
 </html>

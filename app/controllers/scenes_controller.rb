@@ -28,7 +28,7 @@ class ScenesController < ApplicationController
       :content_type => "application/json",
       :Authorization => "Bearer #{current_user.auth_token}"
     }
-    response = RestClient.post 'https://api.wink.com/scenes/' + id + '/activate', headers
+    response = RestClient.post 'https://api.wink.com/scenes/' + id + '/activate', {}, headers
     j_response = JSON.parse(response)
     @scene = j_response["data"]
     render :show
