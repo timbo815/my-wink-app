@@ -1,12 +1,10 @@
 class LightbulbsController < ApplicationController
 
-  def index
-    headers = {
-      :content_type => "application/json",
-      :Authorization => "Bearer #{current_user.auth_token}"
-    }
+  before_action :require_user!
 
-    response = RestClient.get 'https://api.wink.com/users/me/light_bulbs', headers
+  def index
+    path = '/users/me/light_bulbs'
+    response = RestClient.get host_url + path, auth_header
     j_response = JSON.parse(response)
     @lightbulbs = j_response["data"]
     render :index
@@ -14,11 +12,8 @@ class LightbulbsController < ApplicationController
 
   def show
     id = params[:id]
-    headers = {
-      :content_type => "application/json",
-      :Authorization => "Bearer #{current_user.auth_token}"
-    }
-    response = RestClient.get 'https://api.wink.com/light_bulbs/' + id, headers
+    path = '/light_bulbs/' + id
+    response = RestClient.get host_url + path, auth_header
     j_response = JSON.parse(response)
     @lightbulb = j_response["data"]
     render :show

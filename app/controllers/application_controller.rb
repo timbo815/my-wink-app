@@ -29,4 +29,16 @@ class ApplicationController < ActionController::Base
   def require_user!
     redirect_to new_session_url if current_user.nil?
   end
+
+  def auth_header
+    {
+      :content_type => "application/json",
+      :Authorization => "Bearer #{current_user.auth_token}"
+    }
+  end
+
+  def host_url
+    'https://api.wink.com'
+  end
+
 end

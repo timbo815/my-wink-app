@@ -1,13 +1,10 @@
 class DevicesController < ApplicationController
-  require 'rest_client'
+
+  before_action :require_user!
 
   def index
-    headers = {
-      :content_type => "application/json",
-      :Authorization => "Bearer #{current_user.auth_token}"
-    }
-
-    response = RestClient.get 'https://api.wink.com/users/me/wink_devices', headers
+    path = '/users/me/wink_devices'
+    response = RestClient.get host_url + path, auth_header
     j_response = JSON.parse(response)
     @devices = j_response["data"]
     render :index
