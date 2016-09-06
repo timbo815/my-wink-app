@@ -4,8 +4,6 @@ class User < ActiveRecord::Base
   after_initialize :ensure_session_token
 
   validates :password_digest, presence: true
-  # If a password was set, we validate it meets the requirements.
-  # Note the `allow_nil`.
   validates :session_token, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
 

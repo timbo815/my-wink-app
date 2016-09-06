@@ -18,12 +18,15 @@ class UsersController < ApplicationController
       :content_type => 'application/json'
     }
 
-    response = RestClient.post 'https://api.wink.com/oauth2/token', values, headers
-    j_response = JSON.parse(response)
+    begin
+      response = RestClient.post 'https://api.wink.com/oauth2/token', values, headers
+
+      j_response = JSON.parse(response)
 
     @user = User.new(user_params)
     @user.auth_token = j_response["data"]["access_token"]
     @user.refresh_token = j_response["data"]["refresh_token"]
+
 
     if @user.save
       login_user!(@user)
@@ -31,6 +34,10 @@ class UsersController < ApplicationController
     else
       flash.now[:errors] = @user.errors.full_messages
       render :new
+    end
+
+    rescue
+      redirect_to new_user_url
     end
   end
 
