@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     values = <<-VALUES
     {
       "client_id": "basic_wink_client",
-      "client_secret": "d9b18dd3d4aec9c53b4ac8ddc7ddad49",
+      "client_secret": #{ENV["CLIENT_SECRET"]},
       "username": "#{email}",
       "password": "#{password}",
       "grant_type": "password"
@@ -47,6 +47,7 @@ class UsersController < ApplicationController
   end
 
   private
+  
   def user_params
     params.require(:user).permit(:password, :email)
   end
